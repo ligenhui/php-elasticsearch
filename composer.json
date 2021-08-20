@@ -1,6 +1,6 @@
 {
     "name": "ligenhui/php-elasticsearch",
-    "type": "composer-plugin",
+    "type": "library",
     "license" : "Apache-2.0",
     "keywords" : ["es", "elasticsearch", "php-elasticsearch"],
     "autoload": {
