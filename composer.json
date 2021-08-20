@@ -1,0 +1,23 @@
+{
+    "name": "ligenhui/php-elasticsearch",
+    "type": "composer-plugin",
+    "autoload": {
+        "psr-4": {
+            "Ligenhui\\PhpElasticsearch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ligenhui\\PhpElasticsearch\\Tests": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ligenhui",
+            "email": "1395992651@qq.com"
+        }
+    ],
+    "require": {
+        "elasticsearch/elasticsearch": "^7.14"
+    }
+}
