@@ -2,7 +2,13 @@
 
 php版本的elasticsearch常用封装
 
-## 示例
+## 安装
+
+```composer
+composer require ligenhui/php-elasticsearch
+```
+
+## 使用示例
 
 ```php
 
@@ -76,6 +82,15 @@ $es->where('name','bb')->update(['script' => ['inline' => 'ctx._source.name=para
    
 //根据id查询数据
 $es->get(6);
+
+//设置分页
+$es->setPageSize(1)->setScrollSize(10);
+
+//设置区间查询
+$es->setFilterRange('create_time',['gte' => '2020-02-02 12:30:22','lte' => '2021-05-05 12:30:22']);
+
+//设置模糊查询
+$es->like(['name','age'],'aaa');
 
 //根据条件查询数据
 $es->where('name','bbb')->select();
