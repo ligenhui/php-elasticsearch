@@ -1,5 +1,5 @@
 {
-    "name": "ligenhui/phpelasticsearch",
+    "name": "ligenhui/php-elasticsearch",
     "type": "composer-plugin",
     "license" : "Apache-2.0",
     "keywords" : ["es", "elasticsearch", "php-elasticsearch"],
