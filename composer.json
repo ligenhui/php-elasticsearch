@@ -2,7 +2,7 @@
     "name": "ligenhui/php-elasticsearch",
     "type": "composer-plugin",
     "license" : "Apache-2.0",
-    "keywords" : ["es", "elasticsearch", "ligenhui/php-elasticsearch"],
+    "keywords" : ["es", "elasticsearch", "php-elasticsearch"],
     "autoload": {
         "psr-4": {
             "Ligenhui\\PhpElasticsearch\\": "src/"
