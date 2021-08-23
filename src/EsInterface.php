@@ -72,7 +72,16 @@ interface EsInterface
     public function setMustPrefix(string $field, string $value): Elasticsearch;
 
     //设置 must Fuzzy 模糊检索
-    public function like(array $fields, string $value, int $fuzziness = 1): Elasticsearch;
+    public function setMultiMatchFuzzy(array $fields, string $value, string $operator = 'or', int $fuzziness = 1): Elasticsearch;
+
+    //通配符查询 and
+    public function setMustWildcard(array $fields, string $value): Elasticsearch;
+
+    //通配符查询 or
+    public function setShouldWildcard(array $fields, string $value): Elasticsearch;
+
+    //模糊查询
+    public function like($fields, string $value, string $op = "or", string $mode = 'wildcard', int $fuzziness = 1): Elasticsearch;
 
     //设置 filter Term 检索
     public function setFilterTerm(string $field, string $value): Elasticsearch;

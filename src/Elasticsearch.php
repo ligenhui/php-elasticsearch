@@ -625,20 +625,82 @@ class Elasticsearch implements EsInterface
     }
 
     /**
-     *方法描述：模糊查询 对应 must Fuzzy
+     *方法描述：模糊查询 对应 multi_match Fuzzy
      * User：LiGenHui
      * Email：657801509@qq.com
-     * DateTime:2021/8/20 3:54 下午
+     * DateTime:2021/8/23 2:28 下午
      * @param array $fields
      * @param string $value
+     * @param string $operator
      * @param int $fuzziness
      * @return $this
      */
-    public function like(array $fields, string $value, int $fuzziness = 1): Elasticsearch
+    public function setMultiMatchFuzzy(array $fields, string $value, string $operator = 'or', int $fuzziness = 1): Elasticsearch
     {
         $this->searchField['bool']['must'][] = [
-            'multi_match' => ['query' => $value, 'fuzziness' => $fuzziness, 'fields' => $fields]
+            'multi_match' => ['query' => $value, 'fuzziness' => $fuzziness, 'fields' => $fields, 'operator' => $operator]
         ];
+        return $this;
+    }
+
+    /**
+     *方法描述：通配符查询 and
+     * User：LiGenHui
+     * Email：657801509@qq.com
+     * DateTime:2021/8/23 2:33 下午
+     * @param array $fields
+     * @param string $value
+     * @return $this
+     */
+    public function setMustWildcard(array $fields, string $value): Elasticsearch
+    {
+        foreach ($fields as $v) {
+            $this->searchField['bool']['must'][]['wildcard'][$v] = $value;
+        }
+        return $this;
+    }
+
+    /**
+     *方法描述：模糊查询
+     * User：LiGenHui
+     * Email：657801509@qq.com
+     * DateTime:2021/8/23 3:29 下午
+     * @param $fields @字段数组
+     * @param string $value @搜索值
+     * @param string $op @字段联合方式 默认or
+     * @param string $mode @搜索方式 支持fuzz,wildcard两种,默认通配符方式
+     * @param int $fuzziness fuzzy的fuzziness值 默认1
+     * @return $this
+     */
+    public function like($fields, string $value, string $op = "or", string $mode = 'wildcard', int $fuzziness = 1): Elasticsearch
+    {
+        $value = str_replace([" ", "　", "\t", "\n", "\r"], ["", "", "", "", ""], $value);
+        //通配符
+        if ($mode === 'wildcard') {
+            if ($op === 'or') {
+                return $this->setShouldWildcard($fields, $value);
+            } else {
+                return $this->setMustWildcard($fields, $value);
+            }
+        } else {
+            return $this->setMultiMatchFuzzy($fields, $value, $op, $fuzziness);
+        }
+    }
+
+    /**
+     *方法描述：通配符 or
+     * User：LiGenHui
+     * Email：657801509@qq.com
+     * DateTime:2021/8/23 3:24 下午
+     * @param array $fields
+     * @param string $value
+     * @return $this
+     */
+    public function setShouldWildcard(array $fields, string $value): Elasticsearch
+    {
+        foreach ($fields as $v) {
+            $this->searchField['bool']['should'][]['wildcard'][$v]['value'] = $value;
+        }
         return $this;
     }
 
